@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace IU2Andres.Data
+namespace IU2Andres.Models
 {
     public class ApplicationUser:IdentityUser
     {
