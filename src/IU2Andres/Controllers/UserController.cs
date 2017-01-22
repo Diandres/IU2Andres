@@ -30,12 +30,15 @@ namespace IU2Andres.Controllers
         public IActionResult Index()
         {
             List<UserListViewModel> model = new List<UserListViewModel>();
+
             model = userManager.Users.Select(u => new UserListViewModel
             {
                 Id = u.Id,
                 Name = u.UserName,
-                Email = u.Email
-            }).ToList();
+                Email = u.Email,
+                RoleName = u.Roles.Single().RoleId
+        }).ToList();
+            
 
             if (TempData["shortMessage"] != null)
             {

@@ -1,4 +1,4 @@
-﻿namespace IU1test.Models
+﻿namespace IU2Andres.Models
 {
     public class ModalFooter
     {

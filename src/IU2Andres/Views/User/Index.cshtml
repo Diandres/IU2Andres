@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<UserListViewModel>
 @using IU2Andres.Models
+@using IU2Andres.Data
 @using IU2Andres.Code
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<ApplicationRole> RoleManager
 
 
 <div class="top-buffer"></div>
@@ -19,6 +25,7 @@
                     <th>Name</th>
                     <th>Email</th>                   
                     <th>Action</th>
+                    <th>RoleName</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,18 +33,19 @@
                 {
                     <tr>
                         <td>@item.Name</td>
-                        <td>@item.Email</td>                        
+                        <td>@item.Email</td>                       
+                        <td>@RoleManager.Roles.Single(r => r.Id == item.RoleName).Name</td>
                         <td>
                             <a id="editUserModal" data-toggle="modal" asp-action="EditUser" asp-route-id="@item.Id" data-target="#modal-action-user"
                                class="btn btn-info">
                                 <i class="glyphicon glyphicon-pencil"></i>  Edit
                             </a>
-                            <a id="editUserModal" data-toggle="modal"asp-action="ChangePassword" asp-route-id="@item.Id" data-target="#modal-action-user"
+                            <a id="editUserModal" data-toggle="modal" asp-action="ChangePassword" asp-route-id="@item.Id" data-target="#modal-action-user"
                                class="btn btn-info">
                                 <i class="glyphicon glyphicon-pencil"></i>  ChangePassWord
                             </a>
                             <a id="deleteUserModal" data-toggle="modal" asp-action="DeleteUser" asp-route-id="@item.Id" data-target="#modal-action-user"
-                                class="btn btn-danger">
+                               class="btn btn-danger">
                                 <i class="glyphicon glyphicon-trash"></i>  Delete
                             </a>
                         </td>

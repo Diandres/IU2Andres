@@ -77,6 +77,8 @@ namespace IU2Andres
             app.UseStaticFiles();
             app.UseSession();
             app.UseIdentity();
+            UsersData.SeedUsersAndRoles(app.ApplicationServices).Wait();
+            
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
