@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using IU2Andres.Models;
+using IU2Andres.Models.WebShopModels;
 
 namespace IU2Andres.Data
 {
@@ -14,6 +15,9 @@ namespace IU2Andres.Data
             : base(options)
         {
         }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CartItem> ShoppingCartItems { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -1,4 +1,5 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="../scripts/_references.js" />
 /// <reference path="js/application-role-index.js" />
 /// <reference path="js/site.js" />
 /// <reference path="js/user-index.js" />

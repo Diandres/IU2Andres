@@ -47,10 +47,14 @@ namespace IU2Andres
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddSession(/* options go here */);
-
             services.AddMvc();
-
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.CookieName = ".MyApplication";
+            }
+                );
+            services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -58,7 +62,7 @@ namespace IU2Andres
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ApplicationDbContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -77,8 +81,9 @@ namespace IU2Andres
             app.UseStaticFiles();
             app.UseSession();
             app.UseIdentity();
+
             UsersData.SeedUsersAndRoles(app.ApplicationServices).Wait();
-            
+            DbInitializer.Initialize(context);            
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
@@ -88,6 +93,7 @@ namespace IU2Andres
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
     }
 }
